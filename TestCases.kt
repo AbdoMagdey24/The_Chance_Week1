@@ -1,12 +1,12 @@
-fun isValidSudoku(board: List<List<Char>>): Boolean {
-    // Check if the board is empty or contains rows with different lengths
-    if (board.isEmpty() || board.any { it.isEmpty() } || board.any { it.size != board[0].size }) {
+fun isValidSudoku(sudoku: List<List<Char>>): Boolean {
+    // Check if  empty or contains rows with different lengths
+    if (sudoku.isEmpty() || sudoku.any { it.isEmpty() } || sudoku.any { it.size != sudoku[0].size }) {
         return false
     }
 
-    val n = board.size
+    val n = sudoku.size
 
-    // Check if the board size is a perfect square
+    // Check if size is a perfect square
     val sqrtN = Math.sqrt(n.toDouble()).toInt()
     if (sqrtN * sqrtN != n) {
         return false
@@ -19,7 +19,7 @@ fun isValidSudoku(board: List<List<Char>>): Boolean {
 
     for (i in 0 until n) {
         for (j in 0 until n) {
-            val cell = board[i][j]
+            val cell = sudoku[i][j]
 
             // Reject non-digit characters or invalid characters
             if (cell != '-' && (!cell.isDigit() || cell < '1' || cell > '9')) {

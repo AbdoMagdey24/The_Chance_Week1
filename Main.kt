@@ -89,4 +89,12 @@ fun main() {
         listOf('-', '-', '-', '-', '8', '-', '-', '7')
     )
     checkSudokuValidation("Non 9x9 Sudoku grid", invalidSize, false)
+
+    val invalidSudokuNonDigit = listOf(
+        listOf('1', '2', '3', '4'),
+        listOf('3', '4', '1', '2'),
+        listOf('4', '3', '2', '1'),
+        listOf('2', '1', '4', 'a')  //
+    )
+    checkSudokuValidation("Invalid character 'a' instead of a digit", invalidSudokuNonDigit, false)
 }
