@@ -1,32 +1,48 @@
-fun isValidSudoku(sudoku: List<List<Char>>): Boolean {
-    // return checkRows(sudoku) && checkColumns(sudoku) && checkBoxes(sudoku)
-    return false
-}
+fun isValidSudoku(board: List<List<Char>>): Boolean {
+    // Check if the board is empty or contains rows with different lengths
+    if (board.isEmpty() || board.any { it.isEmpty() } || board.any { it.size != board[0].size }) {
+        return false
+    }
 
-fun isValidRow(sudoku: List<List<Char>>): Boolean {
-    return false
-}
+    val n = board.size
 
-fun isValidColumn(sudoku: List<List<Char>>): Boolean {
-    return false
-}
+    // Check if the board size is a perfect square
+    val sqrtN = Math.sqrt(n.toDouble()).toInt()
+    if (sqrtN * sqrtN != n) {
+        return false
+    }
 
-fun isValidBox(sudoku: List<List<Char>>): Boolean {
-    return false
-}
+    // Initialize hash sets for columns, rows, and subgrids (3x3)
+    val columnHashSets = Array(n) { HashSet<Int>() }
+    val rowHashSets = Array(n) { HashSet<Int>() }
+    val subMatrixHashSets = Array(sqrtN) { Array(sqrtN) { HashSet<Int>() } }
 
-fun isValidCharacters(sudoku: List<List<Char>>): Boolean {
-//    return sudoku.all { row ->
-//        row.all { it.isDigit() && it in '1'..'9' || it == '.' }
-//    }
-    return false
-}
+    for (i in 0 until n) {
+        for (j in 0 until n) {
+            val cell = board[i][j]
 
-fun isSudokuEmpty(sudoku: List<List<Char>>): Boolean {
-//    return sudoku.isEmpty() || sudoku.all { it.isEmpty() }
-    return false
-}
+            // Reject non-digit characters or invalid characters
+            if (cell != '-' && (!cell.isDigit() || cell < '1' || cell > '9')) {
+                return false
+            }
 
-fun isSudokuNxNSize(sudoku: List<List<Char>>): Boolean {
-    return false
+            if (cell == '-') continue  // Ignore empty cells
+
+            val value = Character.getNumericValue(cell)
+
+            // Check column
+            if (value in columnHashSets[j]) return false
+            columnHashSets[j].add(value)
+
+            // Check row
+            if (value in rowHashSets[i]) return false
+            rowHashSets[i].add(value)
+
+            // Check subgrid (3x3)
+            if (value in subMatrixHashSets[i / sqrtN][j / sqrtN]) return false
+            subMatrixHashSets[i / sqrtN][j / sqrtN].add(value)
+        }
+    }
+
+    return true
 }
