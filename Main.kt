@@ -1,10 +1,65 @@
-fun checkSudokuValidation(name: String, sudoku: List<List<Char>>, expected: Boolean) {
-    val result = isValidSudoku(sudoku)
-    if (result == expected) {
+fun check(name: String, result: Boolean, correct: Boolean) {
+    if (result == correct) {
         println("success - $name")
     } else {
-        println("failed - ($name)... it should return $expected but it returns: $result")
+        println("failed - ($name)... it should return $correct but it returns: $result")
     }
+}
+
+fun returnTrueForValidSudoku(sudoku: List<List<Char>>) {
+    check(
+        name = "return true if sudoku has no duplicate",
+        result = isValidSudoku(sudoku),
+        correct = true
+    )
+}
+
+fun returnFalseIfRowHasDuplicate(sudoku: List<List<Char>>) {
+    check(
+        name = "return false if row has duplicate",
+        result = isValidSudoku(sudoku),
+        correct = false
+    )
+}
+
+fun returnFalseIfColumnHasDuplicate(sudoku: List<List<Char>>) {
+    check(
+        name = "return false if column has duplicate",
+        result = isValidSudoku(sudoku),
+        correct = false
+    )
+}
+
+fun returnFalseIfBoxHasDuplicate(sudoku: List<List<Char>>) {
+    check(
+        name = "return false if box has duplicate",
+        result = isValidSudoku(sudoku),
+        correct = false
+    )
+}
+
+fun returnFalseForInvalidChars(sudoku: List<List<Char>>) {
+    check(
+        name = "return false if sudoku with invalid chars",
+        result = isValidSudoku(sudoku),
+        correct = false
+    )
+}
+
+fun returnFalseIfSudokuIsEmpty(sudoku: List<List<Char>>) {
+    check(
+        name = "return false if sudoku is empty",
+        result = isValidSudoku(sudoku),
+        correct = false
+    )
+}
+
+fun returnFalseIfSudokuIsNotNxN(sudoku: List<List<Char>>) {
+    check(
+        name = "return false if sudoku isn't n x n",
+        result = isValidSudoku(sudoku),
+        correct = false
+    )
 }
 
 val validSudoku = listOf(
@@ -19,104 +74,69 @@ val validSudoku = listOf(
     listOf('-', '-', '-', '-', '8', '-', '-', '7', '9')
 )
 
-val invalidSudokuBox = listOf(
-    listOf('5', '3', '-', '-', '7', '-', '-', '-', '-'),
-    listOf('6', '-', '-', '1', '9', '5', '-', '-', '-'),
-    listOf('-', '9', '8', '-', '-', '-', '-', '6', '-'),
-    listOf('8', '-', '-', '-', '6', '-', '-', '-', '3'),
-    listOf('4', '-', '-', '8', '-', '3', '-', '-', '1'),
-    listOf('7', '-', '-', '-', '2', '-', '-', '-', '6'),
-    listOf('-', '6', '-', '-', '-', '-', '2', '8', '-'),
-    listOf('-', '-', '-', '4', '1', '9', '-', '-', '5'),
-    listOf('-', '-', '-', '-', '8', '-', '-', '7', '8') // Duplicate 8 in 3x3 box
-)
-
-val invalidSudokuColumn = listOf(
-    listOf('5', '3', '-', '-', '7', '-', '-', '-', '-'),
-    listOf('6', '-', '-', '1', '9', '5', '-', '-', '-'),
-    listOf('-', '9', '8', '-', '-', '-', '-', '6', '-'),
-    listOf('8', '-', '-', '-', '6', '-', '-', '-', '3'),
-    listOf('4', '-', '-', '8', '-', '3', '-', '-', '1'),
-    listOf('7', '-', '-', '-', '2', '-', '-', '-', '6'),
-    listOf('-', '6', '-', '-', '-', '-', '2', '8', '-'),
-    listOf('-', '-', '-', '4', '1', '9', '-', '-', '5'),
-    listOf('5', '-', '-', '-', '8', '-', '-', '7', '9') // Duplicate 5 in column
-)
-
-val invalidSudokuRow = listOf(
-    listOf('5', '3', '-', '-', '7', '-', '-', '-', '-'),
-    listOf('6', '-', '-', '1', '9', '5', '-', '-', '-'),
-    listOf('-', '9', '8', '-', '-', '-', '-', '6', '-'),
-    listOf('8', '-', '-', '-', '6', '-', '-', '-', '3'),
-    listOf('4', '-', '-', '8', '-', '3', '-', '-', '1'),
-    listOf('7', '-', '-', '-', '2', '-', '-', '-', '6'),
-    listOf('-', '6', '-', '-', '-', '-', '2', '8', '-'),
-    listOf('-', '-', '-', '4', '1', '9', '-', '-', '5'),
-    listOf('-', '-', '-', '-', '8', '-', '-', '7', '7') // Duplicate 7 in row
-)
-
-val invalidChars = listOf(
-    listOf('a', '3', '-', '-', '7', '-', '-', '-', '-'),
-    listOf('6', '-', '-', '1', '9', '5', '-', '-', '-'),
-    listOf('-', '9', 'H', '-', '-', '-', '-', '6', '-'),
-    listOf('8', '-', '-', '-', '6', '-', '-', '-', '3'),
-    listOf('4', '-', '-', '8', '-', '3', '-', '-', '1'),
-    listOf('7', '-', '-', '-', '2', '-', '-', '-', '6'),
-    listOf('-', '6', '-', '-', '-', '-', '2', '8', '-'),
-    listOf('-', '-', '-', '4', '1', '9', '-', '-', '5'),
-    listOf('-', '-', '-', '-', '8', '-', '-', '7', 'I')
-)
-
-val invalidSize = listOf(
-    listOf('3', '-', '7', '-', '-', '-', '-'),
-    listOf('6', '-', '-', '1', '9', '5', '-', '-', '-'),
-    listOf('-', '9', '-', '-', '-', '-', '6', '-'),
-    listOf('8', '-', '-', '-', '6', '-', '-', '-', '3'),
-    listOf('4', '-', '-', '8', '-', '3', '-', '-', '1'),
-    listOf('7', '-', '-', '-', '2', '-', '-', '-', '6'),
-    listOf('-', '6', '-', '-', '-', '-', '2', '8', '-'),
-    listOf('-', '-', '-', '4', '1', '9', '-', '-', '5'),
-    listOf('-', '-', '-', '-', '8', '-', '-', '7')
-)
-
-val invalidSudoku4x4NonDigit = listOf(
-    listOf('1', '2', '3', '4'),
-    listOf('3', '4', '1', '2'),
-    listOf('4', '3', '2', '1'),
-    listOf('2', '1', '4', 'a')  // a
-)
-
-val validSudoku4x4 = listOf(
-    listOf('1', '2', '3', '4'),
-    listOf('3', '4', '1', '2'),
-    listOf('2', '1', '4', '3'),
-    listOf('4', '3', '2', '1')
-)
-
-val invalidSudoku4x4Row = listOf(
-    listOf('1', '2', '.', '1'),
-    listOf('.', '4', '1', '2'),
-    listOf('2', '.', '4', '3'),
-    listOf('4', '3', '2', '1')
-)
-
-
 fun main() {
-    checkSudokuValidation("Valid Sudoku", validSudoku, true)
+    returnTrueForValidSudoku(validSudoku)
 
-    checkSudokuValidation("Sudoku with duplicate in row", invalidSudokuRow, false)
 
-    checkSudokuValidation("Sudoku with duplicate in column", invalidSudokuColumn, false)
+    returnFalseIfRowHasDuplicate(listOf(
+        listOf('5', '3', '-', '-', '7', '-', '-', '-', '-'),
+        listOf('6', '-', '-', '1', '9', '5', '-', '-', '-'),
+        listOf('-', '9', '8', '-', '-', '-', '-', '6', '-'),
+        listOf('8', '-', '-', '-', '6', '-', '-', '-', '3'),
+        listOf('4', '-', '-', '8', '-', '3', '-', '-', '1'),
+        listOf('7', '-', '-', '-', '2', '-', '-', '-', '6'),
+        listOf('-', '6', '-', '-', '-', '-', '2', '8', '-'),
+        listOf('-', '-', '-', '4', '1', '9', '-', '-', '5'),
+        listOf('-', '-', '-', '-', '8', '-', '-', '7', '7') // Duplicate 7 in row
+    ))
 
-    checkSudokuValidation("Sudoku with duplicate in box", invalidSudokuBox, false)
+    returnFalseIfColumnHasDuplicate(listOf(
+        listOf('5', '3', '-', '-', '7', '-', '-', '-', '-'),
+        listOf('6', '-', '-', '1', '9', '5', '-', '-', '-'),
+        listOf('-', '9', '8', '-', '-', '-', '-', '6', '-'),
+        listOf('8', '-', '-', '-', '6', '-', '-', '-', '3'),
+        listOf('4', '-', '-', '8', '-', '3', '-', '-', '1'),
+        listOf('7', '-', '-', '-', '2', '-', '-', '-', '6'),
+        listOf('-', '6', '-', '-', '-', '-', '2', '8', '-'),
+        listOf('-', '-', '-', '4', '1', '9', '-', '-', '5'),
+        listOf('5', '-', '-', '-', '8', '-', '-', '7', '9') // Duplicate 5 in column
+    ))
 
-    checkSudokuValidation("Sudoku with invalid characters", invalidChars, false)
+    returnFalseIfBoxHasDuplicate(listOf(
+        listOf('5', '3', '-', '-', '7', '-', '-', '-', '-'),
+        listOf('6', '-', '-', '1', '9', '5', '-', '-', '-'),
+        listOf('-', '9', '8', '-', '-', '-', '-', '6', '-'),
+        listOf('8', '-', '-', '-', '6', '-', '-', '-', '3'),
+        listOf('4', '-', '-', '8', '-', '3', '-', '-', '1'),
+        listOf('7', '-', '-', '-', '2', '-', '-', '-', '6'),
+        listOf('-', '6', '-', '-', '-', '-', '2', '8', '-'),
+        listOf('-', '-', '-', '4', '1', '9', '-', '-', '5'),
+        listOf('-', '-', '-', '-', '8', '-', '-', '7', '8') // Duplicate 8 in 3x3 box
+    ))
 
-    checkSudokuValidation("Non 9x9 Sudoku grid", invalidSize, false)
+    returnFalseForInvalidChars(listOf(
+        listOf('a', '3', '-', '-', '7', '-', '-', '-', '-'),
+        listOf('6', '-', '-', '1', '9', '5', '-', '-', '-'),
+        listOf('-', '9', 'H', '-', '-', '-', '-', '6', '-'),
+        listOf('8', '-', '-', '-', '6', '-', '-', '-', '3'),
+        listOf('4', '-', '-', '8', '-', '3', '-', '-', '1'),
+        listOf('7', '-', '-', '-', '2', '-', '-', '-', '6'),
+        listOf('-', '6', '-', '-', '-', '-', '2', '8', '-'),
+        listOf('-', '-', '-', '4', '1', '9', '-', '-', '5'),
+        listOf('-', '-', '-', '-', '8', '-', '-', '7', 'I')
+    ))
 
-    checkSudokuValidation("Invalid character 'a' instead of a digit", invalidSudoku4x4NonDigit, false)
+    returnFalseIfSudokuIsEmpty(listOf())
 
-    checkSudokuValidation("Valid Sudoku 4 x 4", validSudoku4x4, true)
-
-    checkSudokuValidation("Invalid Sudoku 4 x 4", invalidSudoku4x4Row, false)
+    returnFalseIfSudokuIsNotNxN(listOf(
+        listOf('3', '-', '7', '-', '-', '-', '-'),
+        listOf('6', '-', '-', '1', '9', '5', '-', '-', '-'),
+        listOf('-', '9', '-', '-', '-', '-', '6', '-'),
+        listOf('8', '-', '-', '-', '6', '-', '-', '-', '3'),
+        listOf('4', '-', '-', '8', '-', '3', '-', '-', '1'),
+        listOf('7', '-', '-', '-', '2', '-', '-', '-', '6'),
+        listOf('-', '6', '-', '-', '-', '-', '2', '8', '-'),
+        listOf('-', '-', '-', '4', '1', '9', '-', '-', '5'),
+        listOf('-', '-', '-', '-', '8', '-', '-', '7')
+    ))
 }
