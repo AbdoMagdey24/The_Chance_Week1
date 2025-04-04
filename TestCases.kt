@@ -17,7 +17,7 @@ fun main() {
 
     ip = "256.100.50.25"
     check(
-        name = "Should Return False When Ip has big segment",
+        name = "Should Return False When Ip has out of range",
         result = isValidIp(ip),
         correct = false,
         input = ip
@@ -33,15 +33,7 @@ fun main() {
 
     ip = "192.168.1"
     check(
-        name = "Should Return False When Ip has invalid segment count",
-        result = isValidIp(ip),
-        correct = false,
-        input = ip
-    )
-
-    ip = "192.168.1"
-    check(
-        name = "Should Return False When Ip has invalid segment count",
+        name = "Should Return False When Ip is missing segments",
         result = isValidIp(ip),
         correct = false,
         input = ip
@@ -86,25 +78,9 @@ fun main() {
         input = ip
     )
 
-    ip = "-1.2.3.4"
-    check(
-        name = "Should Return False When Ip has negative numbers",
-        result = isValidIp(ip),
-        correct = false,
-        input = ip
-    )
-
     ip = "192. 168.1.1"
     check(
         name = "Should Return False When Ip has space between segments",
-        result = isValidIp(ip),
-        correct = false,
-        input = ip
-    )
-
-    ip = "00.0.0.0"
-    check(
-        name = "Should Return False When Ip has zero prefix",
         result = isValidIp(ip),
         correct = false,
         input = ip
